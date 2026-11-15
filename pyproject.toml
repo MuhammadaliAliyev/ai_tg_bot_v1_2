@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "gemini-telegram-bot"
+version = "0.1.0"
+description = "Production-ready Telegram bot integrated with Google Gemini API"
+authors = ["MuhammadaliAliyev <muhammadalialiyev4174@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiogram = "^3.13.0"
+google-genai = "*"
+pydantic-settings = "*"
+python-dotenv = "*"
+aiofiles = "*"
+loguru = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
