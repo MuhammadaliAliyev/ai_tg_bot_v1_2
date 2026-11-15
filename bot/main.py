@@ -78,6 +78,21 @@ async def on_shutdown(bot: Bot) -> None:
     logger.info("Bot seansi yopildi. Graceful shutdown yakunlandi.")
 
 
+import os
+from aiohttp import web
+
+async def health_check(request):
+    return web.Response(text="Bot is running!")
+
+async def start_web_server():
+    app = web.Application()
+    app.router.add_get("/", health_check)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    port = int(os.environ.get("PORT", 10000))
+    site = web.TCPSite(runner, "0.0.0.0", port)
+    await site.start()
+
 async def main() -> None:
     """Initialize and run the Telegram bot polling engine."""
     setup_logging()
@@ -107,6 +122,7 @@ async def main() -> None:
     logger.info("Barcha routerlar (commands, media, text) ro'yxatdan o'tkazildi")
 
     try:
+        await start_web_server()
         logger.info("Polling boshlanmoqda...")
         await dp.start_polling(
             bot,
